@@ -1,4 +1,6 @@
 import os
+
+from django.core.mail import EmailMessage
 from django.shortcuts import render
 import face_recognition
 import cv2
@@ -244,8 +246,19 @@ def StationExitView(request, station_no):
                         log.status = 1
                         log.fare = 20
                         log.save()
+                        try:
+                            subject = 'Thanks for Travelling in Yugant Express'
+                            message = person.name + ', thanks for travelling.\n From Station : {} \n Entry time : {} \n To station : {}\n Exit Time : {} \n Your Fare : {}'.format(
+                                log.entry_station, log.entry_datetime, log.exit_station, log.exit_datetime, log.fare)
+                            from_email = settings.EMAIL_HOST_USER
+                            to_email = [person.email]
+                            email = EmailMessage(subject=subject, from_email=from_email, to=to_email, body=message)
+                            email.send()
+                            print('email sent')
+                        except: print('failed to send email')
                     except:
-                        print('Chada hi nhi tha... cheating krta h yeh !! fine lo')
+                        pass
+                        # print('Chada hi nhi tha... cheating krta h yeh !! fine lo')
                 face_names.append(name)
                 face_uids.append(uid)
         i += 1
