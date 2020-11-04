@@ -16,4 +16,3 @@ class LogsAdmin(admin.ModelAdmin):
 admin.site.register(models.Person)
 admin.site.register(models.Station)
 admin.site.register(models.Log)
-admin.site.register(models.Image)

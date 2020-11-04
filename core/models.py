@@ -18,12 +18,6 @@ class Person(models.Model):
     #     ordering = ['uid']
 
 
-class Image(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/')
-    encoding = ArrayField(models.FloatField(blank=True, null=True), size=1000, null=True, default=0)
-
-
 class Station(models.Model):
     station_no = models.IntegerField(unique=True)
     name = models.CharField(max_length=100)
@@ -46,3 +40,6 @@ class Log(models.Model):
 
     status = models.BooleanField(default=0)
     fare = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.person) + ' ' + str(self.status)
